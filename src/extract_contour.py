@@ -2,13 +2,13 @@ import cv2
 import numpy as np
 from pathlib import Path
 
-raw_image_path = "data/raw/bolt_nut.png"
+raw_image_path = "data/raw/bolt_nut.png"     #Taking the original image 
 output_path = "data/processed/bn_contour.npy"
 
 def main():
     print(f"Reading image from: {raw_image_path}")
     Path("data/processed").mkdir(parents=True, exist_ok=True)
-
+#Converting the raw image to grayscale image
     img = cv2.imread(raw_image_path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         raise FileNotFoundError(f"Could not load image at {raw_image_path}")
@@ -16,6 +16,8 @@ def main():
     print("Image loaded, shape:", img.shape)
 
     # threshold to binary
+    #if pixel < 127 → 0 (black)
+    #if pixel > 127 → 255 (white)
     _, th = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
 
     # find contours
